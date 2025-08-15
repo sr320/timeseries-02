@@ -27,11 +27,12 @@ def test_data_loading():
         
         # Test lncRNA data
         print("\n3. Loading lncRNA data...")
-        lncrna_data = pd.read_csv('../data/Apul_lncRNA_counts_filtered.txt', sep='\t', comment='#')
+        lncrna_data = pd.read_csv('../data/Apul_lncRNA_counts_filtered.txt', sep='\t', comment='#', skiprows=5)
         print(f"   ✓ Loaded: {lncrna_data.shape[0]} lncRNAs, {lncrna_data.shape[1]} columns")
         
         # Find count columns
         count_cols = [col for col in lncrna_data.columns if 'ACR-' in col]
+        lncrna_samples = count_cols
         print(f"   ✓ Found {len(count_cols)} sample columns with ACR- pattern")
         
         # Test methylation data

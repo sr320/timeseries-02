@@ -52,6 +52,19 @@ def clean_mirna_data(mirna_data):
     """Clean miRNA data."""
     print("Cleaning miRNA data...")
     
+    # Clean column names - extract just the ACR-XXX-TPX part
+    clean_cols = {}
+    for col in mirna_data.columns:
+        if 'ACR-' in col and 'TP' in col:
+            # Extract ACR-XXX-TPX pattern
+            import re
+            match = re.search(r'ACR-\d+-TP\d+', col)
+            if match:
+                clean_cols[col] = match.group()
+    
+    # Rename columns
+    mirna_data = mirna_data.rename(columns=clean_cols)
+    
     # Set miRNA name as index
     mirna_data.set_index('Name', inplace=True)
     
@@ -71,6 +84,24 @@ def clean_lncrna_data(lncrna_data):
     count_cols = [col for col in lncrna_data.columns if 'ACR-' in col]
     lncrna_counts = lncrna_data[['Geneid'] + count_cols].copy()
     
+    # Clean column names - extract just the ACR-XXX-TPX part
+    clean_cols = {}
+    for col in count_cols:
+        if 'ACR-' in col:
+            # Extract ACR-XXX-TPX pattern
+            parts = col.split('/')
+            for part in parts:
+                if 'ACR-' in part and 'TP' in part:
+                    # Find the ACR-XXX-TPX pattern
+                    import re
+                    match = re.search(r'ACR-\d+-TP\d+', part)
+                    if match:
+                        clean_cols[col] = match.group()
+                        break
+    
+    # Rename columns
+    lncrna_counts = lncrna_counts.rename(columns=clean_cols)
+    
     # Set Geneid as index
     lncrna_counts.set_index('Geneid', inplace=True)
     
@@ -85,6 +116,19 @@ def clean_lncrna_data(lncrna_data):
 def clean_methylation_data(methylation_data):
     """Clean DNA methylation data."""
     print("Cleaning DNA methylation data...")
+    
+    # Clean column names - extract just the ACR-XXX-TPX part
+    clean_cols = {}
+    for col in methylation_data.columns:
+        if 'ACR-' in col and 'TP' in col:
+            # Extract ACR-XXX-TPX pattern
+            import re
+            match = re.search(r'ACR-\d+-TP\d+', col)
+            if match:
+                clean_cols[col] = match.group()
+    
+    # Rename columns
+    methylation_data = methylation_data.rename(columns=clean_cols)
     
     # Set CpG as index
     methylation_data.set_index('CpG', inplace=True)
