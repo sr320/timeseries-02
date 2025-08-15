@@ -16,10 +16,10 @@ This directory contains the **complete biological findings report** from our opt
 - **`README-Context-Dependent-Findings.md`** - This file explaining the contents
 
 ### 🖼️ Visualizations
-- **`Context-Dependent-Findings-Overview.png`** - Overview of all findings
-- **`Context-Dependent-Detailed-Analysis.png`** - Detailed context analysis
-- **`Multi-Way-Regulation-Analysis.png`** - Multi-way regulatory networks
-- **`Summary-Statistics-Table.png`** - Statistical summary table
+- **`images/Context-Dependent-Findings-Overview.png`** - Overview of all findings
+- **`images/Context-Dependent-Detailed-Analysis.png`** - Detailed context analysis
+- **`images/Multi-Way-Regulation-Analysis.png`** - Multi-way regulatory networks
+- **`images/Summary-Statistics-Table.png`** - Statistical summary table
 
 ### 🔧 Analysis Scripts
 - **`generate_findings_visualizations.py`** - Script to generate all visualizations

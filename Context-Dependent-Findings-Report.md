@@ -194,25 +194,25 @@ This report includes comprehensive visualizations that illustrate the key biolog
 
 ### 🖼️ Generated Charts
 
-1. **Context-Dependent-Findings-Overview.png** - Comprehensive overview of all findings
+1. **`images/Context-Dependent-Findings-Overview.png`** - Comprehensive overview of all findings
    - Context-dependent vs total interactions
    - Distribution of interaction improvements
    - Multi-way regulation complexity
    - Performance improvement distributions
 
-2. **Context-Dependent-Detailed-Analysis.png** - Detailed context analysis
+2. **`images/Context-Dependent-Detailed-Analysis.png`** - Detailed context analysis
    - Context strength distributions
    - Context direction analysis
    - Improvement vs context strength relationships
    - High vs low context correlation patterns
 
-3. **Multi-Way-Regulation-Analysis.png** - Multi-way regulatory networks
+3. **`images/Multi-Way-Regulation-Analysis.png`** - Multi-way regulatory networks
    - Distribution of regulator types (miRNA, lncRNA, methylation)
    - Multi-regulator model improvements
    - Regulator count vs improvement relationships
    - Base vs full model performance comparison
 
-4. **Summary-Statistics-Table.png** - Statistical summary table
+4. **`images/Summary-Statistics-Table.png`** - Statistical summary table
    - Comprehensive overview of all analysis types
    - Total counts, significant findings, and percentages
    - Mean improvements across all interaction types
@@ -233,22 +233,22 @@ The visualizations reveal several critical patterns:
 ### 1. Context-Dependent Findings Overview
 *Comprehensive overview of all findings including context-dependent interactions, improvement distributions, multi-way regulation complexity, and performance improvements.*
 
-![Context-Dependent Findings Overview](./Context-Dependent-Findings-Overview.png)
+![Context-Dependent Findings Overview](images/Context-Dependent-Findings-Overview.png)
 
 ### 2. Detailed Context-Dependent Analysis
 *Detailed analysis showing context strength distributions, context direction analysis, improvement vs context strength relationships, and high vs low context correlation patterns.*
 
-![Context-Dependent Detailed Analysis](./Context-Dependent-Detailed-Analysis.png)
+![Context-Dependent Detailed Analysis](images/Context-Dependent-Detailed-Analysis.png)
 
 ### 3. Multi-Way Regulatory Networks Analysis
 *Analysis of multi-way regulation including regulator type distribution, model improvements, regulator count relationships, and base vs full model performance.*
 
-![Multi-Way Regulation Analysis](./Multi-Way-Regulation-Analysis.png)
+![Multi-Way Regulation Analysis](images/Multi-Way-Regulation-Analysis.png)
 
 ### 4. Summary Statistics Table
 *Comprehensive statistical summary table showing all analysis types, total counts, significant findings, percentages, and mean improvements.*
 
-![Summary Statistics Table](./Summary-Statistics-Table.png)
+![Summary Statistics Table](images/Summary-Statistics-Table.png)
 
 ---
 
@@ -289,10 +289,10 @@ The visualizations reveal several critical patterns:
 - **Font sizes**: Optimized for both screen viewing and printing
 
 ### **File Specifications**
-- **Context-Dependent-Findings-Overview.png**: 381KB - Overview of all findings
-- **Context-Dependent-Detailed-Analysis.png**: 1.4MB - Detailed context analysis
-- **Multi-Way-Regulation-Analysis.png**: 636KB - Multi-way regulatory networks
-- **Summary-Statistics-Table.png**: 186KB - Statistical summary table
+- **`images/Context-Dependent-Findings-Overview.png`**: 381KB - Overview of all findings
+- **`images/Context-Dependent-Detailed-Analysis.png`**: 1.4MB - Detailed context analysis
+- **`images/Multi-Way-Regulation-Analysis.png`**: 636KB - Multi-way regulatory networks
+- **`images/Summary-Statistics-Table.png`**: 186KB - Statistical summary table
 
 ### **Generation Method**
 All visualizations were automatically generated using the `generate_findings_visualizations.py` script, ensuring:
