@@ -243,12 +243,12 @@ The visualizations reveal several critical patterns:
 ### 3. Multi-Way Regulatory Networks Analysis
 *Analysis of multi-way regulation including regulator type distribution, model improvements, regulator count relationships, and base vs full model performance.*
 
-![Multi-Way Regulation Analysis](Multi-Way-Regulation-Analysis.png)
+![Multi-Way Regulation Analysis](./Multi-Way-Regulation-Analysis.png)
 
 ### 4. Summary Statistics Table
 *Comprehensive statistical summary table showing all analysis types, total counts, significant findings, percentages, and mean improvements.*
 
-![Summary Statistics Table](Summary-Statistics-Table.png)
+![Summary Statistics Table](./Summary-Statistics-Table.png)
 
 ---
 
