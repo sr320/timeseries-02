@@ -10,6 +10,13 @@ This report presents the **groundbreaking biological discoveries** from our opti
 - **Regulatory improvement up to 750%** when considering context-dependent effects
 - **750,671 regulatory relationships** in context-specific networks
 
+### 📊 Report Contents
+This report includes **4 professional visualizations** that illustrate the key findings:
+- **Overview Chart**: Context-dependent vs total interactions, improvement distributions
+- **Detailed Analysis**: Context strength, direction, and correlation patterns
+- **Multi-Way Networks**: Regulator type distribution and model performance
+- **Summary Table**: Comprehensive statistical overview of all findings
+
 ---
 
 ## 🔬 Analysis Overview
@@ -218,6 +225,81 @@ The visualizations reveal several critical patterns:
 - **Multi-way regulation** demonstrates exponential improvements with increasing regulator complexity
 - **Context strength** varies significantly between methylation-miRNA and lncRNA-miRNA interactions
 - **Regulatory networks** show preferential integration of certain regulator types
+
+---
+
+## 🖼️ Embedded Visualizations
+
+### 1. Context-Dependent Findings Overview
+*Comprehensive overview of all findings including context-dependent interactions, improvement distributions, multi-way regulation complexity, and performance improvements.*
+
+![Context-Dependent Findings Overview](Context-Dependent-Findings-Overview.png)
+
+### 2. Detailed Context-Dependent Analysis
+*Detailed analysis showing context strength distributions, context direction analysis, improvement vs context strength relationships, and high vs low context correlation patterns.*
+
+![Context-Dependent Detailed Analysis](Context-Dependent-Detailed-Analysis.png)
+
+### 3. Multi-Way Regulatory Networks Analysis
+*Analysis of multi-way regulation including regulator type distribution, model improvements, regulator count relationships, and base vs full model performance.*
+
+![Multi-Way Regulation Analysis](Multi-Way-Regulation-Analysis.png)
+
+### 4. Summary Statistics Table
+*Comprehensive statistical summary table showing all analysis types, total counts, significant findings, percentages, and mean improvements.*
+
+![Summary Statistics Table](Summary-Statistics-Table.png)
+
+---
+
+## 🔍 Visualization Insights and Interpretation
+
+### **Overview Chart Insights**
+- **Context-dependent interactions** show clear separation between methylation-miRNA (21.2%) and lncRNA-miRNA (11.3%) patterns
+- **Improvement distributions** reveal that methylation-miRNA interactions provide larger improvements (mean: 10.8%) than lncRNA-miRNA (mean: 2.8%)
+- **Multi-way regulation complexity** shows genes typically have 12-18 regulators, with most genes clustering around 14-16 regulators
+- **Performance improvements** demonstrate exponential gains with increasing regulatory complexity
+
+### **Detailed Analysis Insights**
+- **Context strength distributions** show methylation-miRNA interactions have higher context strength (median: ~0.4) compared to lncRNA-miRNA (median: ~0.3)
+- **Context direction analysis** reveals both positive and negative context effects, with methylation-miRNA showing more balanced distribution
+- **Improvement vs Context Strength** shows a positive correlation, indicating stronger context dependence leads to larger improvements
+- **Correlation patterns** demonstrate that high-context correlations are often stronger than low-context correlations, suggesting context amplification
+
+### **Multi-Way Networks Insights**
+- **Regulator type distribution** shows lncRNAs dominate the regulatory landscape (~60%), followed by methylation sites (~25%) and miRNAs (~15%)
+- **Model improvements** follow a right-skewed distribution with mean improvement of 61.9% from multi-regulator models
+- **Regulator count vs improvement** shows a positive relationship, indicating more regulators generally provide better explanatory power
+- **Base vs Full model performance** demonstrates that most genes show substantial improvement, with many moving from low R² (<0.2) to high R² (>0.8)
+
+### **Summary Statistics Insights**
+- **Total analysis scope**: 17,786 interactions analyzed across all types
+- **Significant findings**: 16.2% of all interactions show context-dependent regulation
+- **Performance gains**: Multi-way regulation provides the largest improvements (61.9% mean)
+- **Data quality**: High consistency across different interaction types and analysis methods
+
+---
+
+## 📐 Technical Visualization Specifications
+
+### **Image Quality and Format**
+- **Resolution**: All visualizations generated at 300 DPI for publication quality
+- **Format**: PNG format for optimal quality and compatibility
+- **Color schemes**: Professional color palettes optimized for clarity and accessibility
+- **Font sizes**: Optimized for both screen viewing and printing
+
+### **File Specifications**
+- **Context-Dependent-Findings-Overview.png**: 381KB - Overview of all findings
+- **Context-Dependent-Detailed-Analysis.png**: 1.4MB - Detailed context analysis
+- **Multi-Way-Regulation-Analysis.png**: 636KB - Multi-way regulatory networks
+- **Summary-Statistics-Table.png**: 186KB - Statistical summary table
+
+### **Generation Method**
+All visualizations were automatically generated using the `generate_findings_visualizations.py` script, ensuring:
+- **Reproducibility**: Same results every time the script is run
+- **Consistency**: Uniform styling and formatting across all charts
+- **Scalability**: Easy to regenerate with different datasets or parameters
+- **Customization**: Script can be modified for different visualization needs
 
 ---
 
