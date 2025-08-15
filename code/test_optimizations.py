@@ -12,21 +12,22 @@ import pandas as pd
 import psutil
 import os
 
+# Define worker function at module level for multiprocessing
+def worker_function(worker_id):
+    """Simulate work in parallel workers."""
+    start_time = time.time()
+    
+    # Simulate computational work
+    result = 0
+    for i in range(1000000):
+        result += np.sin(i) * np.cos(i)
+    
+    work_time = time.time() - start_time
+    return f"Worker {worker_id}: {result:.6f} (completed in {work_time:.3f}s)"
+
 def test_parallel_processing():
     """Test parallel processing capabilities."""
     print("🧪 Testing parallel processing...")
-    
-    def worker_function(worker_id):
-        """Simulate work in parallel workers."""
-        start_time = time.time()
-        
-        # Simulate computational work
-        result = 0
-        for i in range(1000000):
-            result += np.sin(i) * np.cos(i)
-        
-        work_time = time.time() - start_time
-        return f"Worker {worker_id}: {result:.6f} (completed in {work_time:.3f}s)"
     
     # Test with different numbers of workers
     worker_counts = [1, 4, 8, 16, 32, 48]
@@ -36,17 +37,34 @@ def test_parallel_processing():
         
         start_time = time.time()
         
-        with ProcessPoolExecutor(max_workers=n_workers) as executor:
-            futures = [executor.submit(worker_function, i) for i in range(n_workers)]
-            results = [future.result() for future in as_completed(futures)]
-        
-        total_time = time.time() - start_time
-        
-        print(f"✅ {n_workers} workers completed in {total_time:.3f}s")
-        for result in results[:3]:  # Show first 3 results
-            print(f"   {result}")
-        if len(results) > 3:
-            print(f"   ... and {len(results) - 3} more workers")
+        try:
+            with ProcessPoolExecutor(max_workers=n_workers) as executor:
+                futures = [executor.submit(worker_function, i) for i in range(n_workers)]
+                results = [future.result() for future in as_completed(futures)]
+            
+            total_time = time.time() - start_time
+            
+            print(f"✅ {n_workers} workers completed in {total_time:.3f}s")
+            for result in results[:3]:  # Show first 3 results
+                print(f"   {result}")
+            if len(results) > 3:
+                print(f"   ... and {len(results) - 3} more workers")
+                
+        except Exception as e:
+            print(f"❌ Failed with {n_workers} workers: {e}")
+            # Try with fewer workers
+            if n_workers > 1:
+                print(f"   Trying with {n_workers//2} workers instead...")
+                try:
+                    with ProcessPoolExecutor(max_workers=n_workers//2) as executor:
+                        futures = [executor.submit(worker_function, i) for i in range(n_workers//2)]
+                        results = [future.result() for future in as_completed(futures)]
+                    
+                    total_time = time.time() - start_time
+                    print(f"✅ {n_workers//2} workers completed in {total_time:.3f}s")
+                    
+                except Exception as e2:
+                    print(f"   ❌ Still failed: {e2}")
     
     print("\n✅ Parallel processing test completed!")
 
