@@ -233,12 +233,12 @@ The visualizations reveal several critical patterns:
 ### 1. Context-Dependent Findings Overview
 *Comprehensive overview of all findings including context-dependent interactions, improvement distributions, multi-way regulation complexity, and performance improvements.*
 
-![Context-Dependent Findings Overview](Context-Dependent-Findings-Overview.png)
+![Context-Dependent Findings Overview](./Context-Dependent-Findings-Overview.png)
 
 ### 2. Detailed Context-Dependent Analysis
 *Detailed analysis showing context strength distributions, context direction analysis, improvement vs context strength relationships, and high vs low context correlation patterns.*
 
-![Context-Dependent Detailed Analysis](Context-Dependent-Detailed-Analysis.png)
+![Context-Dependent Detailed Analysis](./Context-Dependent-Detailed-Analysis.png)
 
 ### 3. Multi-Way Regulatory Networks Analysis
 *Analysis of multi-way regulation including regulator type distribution, model improvements, regulator count relationships, and base vs full model performance.*
