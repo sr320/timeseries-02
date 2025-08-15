@@ -26,36 +26,20 @@ def load_and_preprocess_data():
     """Load and preprocess all data matrices."""
     print("Loading data matrices...")
     
-    # Load gene expression data
-    print("Loading gene expression data...")
-    gene_data = pd.read_csv('data/apul-gene_count_matrix.csv')
-    
-    # Load miRNA data
-    print("Loading miRNA data...")
-    mirna_data = pd.read_csv('data/Apul_miRNA_counts_formatted.txt', sep='\t')
-    
-    # Load lncRNA data
-    print("Loading lncRNA data...")
-    lncrna_data = pd.read_csv('data/Apul_lncRNA_counts_filtered.txt', sep='\t', comment='#')
-    
-    # Load DNA methylation data
-    print("Loading DNA methylation data...")
-    methylation_data = pd.read_csv('data/merged-WGBS-CpG-counts_filtered.csv')
+    # Load cleaned data files
+    gene_data = pd.read_csv('../data/gene_counts_cleaned.csv')
+    mirna_data = pd.read_csv('../data/mirna_counts_cleaned.csv')
+    lncrna_data = pd.read_csv('../data/lncrna_counts_cleaned.csv')
+    methylation_data = pd.read_csv('../data/methylation_counts_cleaned.csv')
     
     return gene_data, mirna_data, lncrna_data, methylation_data
 
 def clean_gene_data(gene_data):
     """Clean and prepare gene expression data."""
-    print("Cleaning gene expression data...")
-    
-    # Remove duplicate columns (some samples appear twice)
-    gene_data = gene_data.loc[:, ~gene_data.columns.duplicated()]
+    print("Processing gene expression data...")
     
     # Set gene_id as index
     gene_data.set_index('gene_id', inplace=True)
-    
-    # Remove genes with all zero counts
-    gene_data = gene_data.loc[(gene_data != 0).any(axis=1)]
     
     # Log2 transform (add 1 to avoid log(0))
     gene_data_log = np.log2(gene_data + 1)
@@ -64,13 +48,10 @@ def clean_gene_data(gene_data):
 
 def clean_mirna_data(mirna_data):
     """Clean and prepare miRNA data."""
-    print("Cleaning miRNA data...")
+    print("Processing miRNA data...")
     
     # Set miRNA name as index
     mirna_data.set_index('Name', inplace=True)
-    
-    # Remove rows with all zero counts
-    mirna_data = mirna_data.loc[(mirna_data != 0).any(axis=1)]
     
     # Log2 transform
     mirna_data_log = np.log2(mirna_data + 1)
@@ -79,35 +60,22 @@ def clean_mirna_data(mirna_data):
 
 def clean_lncrna_data(lncrna_data):
     """Clean and prepare lncRNA data."""
-    print("Cleaning lncRNA data...")
-    
-    # Remove metadata columns and keep only count columns
-    count_cols = [col for col in lncrna_data.columns if 'ACR-' in col]
-    lncrna_counts = lncrna_data[['Geneid'] + count_cols].copy()
+    print("Processing lncRNA data...")
     
     # Set Geneid as index
-    lncrna_counts.set_index('Geneid', inplace=True)
-    
-    # Remove rows with all zero counts
-    lncrna_counts = lncrna_counts.loc[(lncrna_counts != 0).any(axis=1)]
+    lncrna_data.set_index('Geneid', inplace=True)
     
     # Log2 transform
-    lncrna_counts_log = np.log2(lncrna_counts + 1)
+    lncrna_counts_log = np.log2(lncrna_data + 1)
     
-    return lncrna_counts, lncrna_counts_log
+    return lncrna_data, lncrna_counts_log
 
 def clean_methylation_data(methylation_data):
     """Clean and prepare DNA methylation data."""
-    print("Cleaning DNA methylation data...")
+    print("Processing DNA methylation data...")
     
     # Set CpG as index
     methylation_data.set_index('CpG', inplace=True)
-    
-    # Remove rows with all zero values
-    methylation_data = methylation_data.loc[(methylation_data != 0).any(axis=1)]
-    
-    # Fill NaN values with 0
-    methylation_data = methylation_data.fillna(0)
     
     return methylation_data
 
@@ -115,22 +83,10 @@ def standardize_sample_names(data_dict):
     """Standardize sample names across all datasets."""
     print("Standardizing sample names...")
     
-    # Extract sample names from gene data (most complete)
-    gene_samples = [col for col in data_dict['gene'].columns if 'ACR-' in col]
-    
-    # Standardize sample names
-    sample_mapping = {}
-    for sample in gene_samples:
-        # Extract ACR-XXX-TPX pattern
-        if 'ACR-' in sample and 'TP' in sample:
-            parts = sample.split('-')
-            if len(parts) >= 3:
-                acr_num = parts[1]
-                tp_part = parts[2]
-                if tp_part.startswith('TP'):
-                    tp_num = tp_part[2:]
-                    standardized = f"ACR-{acr_num}-TP{tp_num}"
-                    sample_mapping[sample] = standardized
+    # All datasets now have consistent sample names
+    # Just return a simple mapping
+    gene_samples = list(data_dict['gene'].columns)
+    sample_mapping = {sample: sample for sample in gene_samples}
     
     return sample_mapping
 

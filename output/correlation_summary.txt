@@ -1,0 +1,29 @@
+CORRELATION ANALYSIS SUMMARY
+========================================
+
+Total genes analyzed: 20
+Total correlations calculated: 60
+Significant correlations (p < 0.05): 13
+
+miRNA:
+  Mean correlation: 0.021
+  Significant correlations: 5
+  Strong correlations (|r| > 0.5): 0
+
+lncRNA:
+  Mean correlation: -0.014
+  Significant correlations: 1
+  Strong correlations (|r| > 0.5): 0
+
+DNA_methylation:
+  Mean correlation: 0.031
+  Significant correlations: 7
+  Strong correlations (|r| > 0.5): 1
+
+TOP 5 STRONGEST CORRELATIONS:
+------------------------------
+FUN_009574 - DNA_methylation: r = 0.545 (p = 2.805e-04)
+FUN_042621 - DNA_methylation: r = 0.500 (p = 1.028e-03)
+FUN_008377 - DNA_methylation: r = 0.458 (p = 2.930e-03)
+FUN_008377 - miRNA: r = 0.456 (p = 3.131e-03)
+FUN_009574 - miRNA: r = 0.428 (p = 5.822e-03)

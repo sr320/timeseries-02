@@ -1,0 +1,13 @@
+GENE REGULATION ANALYSIS SUMMARY
+==================================================
+
+Total genes analyzed: 0
+Mean Linear R²: nan
+Mean Ridge R²: nan
+Mean Lasso R²: nan
+Mean Random Forest R²: nan
+Best performing model: Linear
+Genes with high regulatory influence (R² > 0.5): 0
+
+TOP 5 GENES BY REGULATORY INFLUENCE:
+----------------------------------------

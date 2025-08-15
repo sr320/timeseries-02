@@ -26,44 +26,22 @@ def load_data():
 
 def clean_gene_data(gene_data):
     """Clean gene expression data."""
-    print("Cleaning gene expression data...")
-    
-    # Remove duplicate columns
-    gene_data = gene_data.loc[:, ~gene_data.columns.duplicated()]
+    print("Processing gene expression data...")
     
     # Set gene_id as index
     gene_data.set_index('gene_id', inplace=True)
     
-    # Remove genes with all zero counts
-    gene_data = gene_data.loc[(gene_data != 0).any(axis=1)]
-    
-    # Log2 transform
+    # Log2 transform (add 1 to avoid log(0))
     gene_data_log = np.log2(gene_data + 1)
     
     return gene_data, gene_data_log
 
 def clean_mirna_data(mirna_data):
     """Clean miRNA data."""
-    print("Cleaning miRNA data...")
-    
-    # Clean column names - extract just the ACR-XXX-TPX part
-    clean_cols = {}
-    for col in mirna_data.columns:
-        if 'ACR-' in col and 'TP' in col:
-            # Extract ACR-XXX-TPX pattern
-            import re
-            match = re.search(r'ACR-\d+-TP\d+', col)
-            if match:
-                clean_cols[col] = match.group()
-    
-    # Rename columns
-    mirna_data = mirna_data.rename(columns=clean_cols)
+    print("Processing miRNA data...")
     
     # Set miRNA name as index
     mirna_data.set_index('Name', inplace=True)
-    
-    # Remove rows with all zero counts
-    mirna_data = mirna_data.loc[(mirna_data != 0).any(axis=1)]
     
     # Log2 transform
     mirna_data_log = np.log2(mirna_data + 1)
@@ -72,92 +50,24 @@ def clean_mirna_data(mirna_data):
 
 def clean_lncrna_data(lncrna_data):
     """Clean lncRNA data."""
-    print("Cleaning lncRNA data...")
-    
-    # Find count columns (those with ACR- pattern)
-    count_cols = [col for col in lncrna_data.columns if 'ACR-' in col]
-    lncrna_counts = lncrna_data[['Geneid'] + count_cols].copy()
-    
-    # Clean column names - extract just the ACR-XXX-TPX part
-    clean_cols = {}
-    for col in count_cols:
-        if 'ACR-' in col:
-            # Extract ACR-XXX-TPX pattern
-            parts = col.split('/')
-            for part in parts:
-                if 'ACR-' in part and 'TP' in part:
-                    # Find the ACR-XXX-TPX pattern
-                    import re
-                    match = re.search(r'ACR-\d+-TP\d+', part)
-                    if match:
-                        clean_cols[col] = match.group()
-                        break
-    
-    # Rename columns
-    lncrna_counts = lncrna_counts.rename(columns=clean_cols)
+    print("Processing lncRNA data...")
     
     # Set Geneid as index
-    lncrna_counts.set_index('Geneid', inplace=True)
-    
-    # Remove rows with all zero counts
-    lncrna_counts = lncrna_counts.loc[(lncrna_counts != 0).any(axis=1)]
+    lncrna_data.set_index('Geneid', inplace=True)
     
     # Log2 transform
-    lncrna_counts_log = np.log2(lncrna_counts + 1)
+    lncrna_counts_log = np.log2(lncrna_data + 1)
     
-    return lncrna_counts, lncrna_counts_log
+    return lncrna_data, lncrna_counts_log
 
 def clean_methylation_data(methylation_data):
     """Clean DNA methylation data."""
-    print("Cleaning DNA methylation data...")
-    
-    # Clean column names - extract just the ACR-XXX-TPX part
-    clean_cols = {}
-    for col in methylation_data.columns:
-        if 'ACR-' in col and 'TP' in col:
-            # Extract ACR-XXX-TPX pattern
-            import re
-            match = re.search(r'ACR-\d+-TP\d+', col)
-            if match:
-                clean_cols[col] = match.group()
-    
-    # Rename columns
-    methylation_data = methylation_data.rename(columns=clean_cols)
+    print("Processing DNA methylation data...")
     
     # Set CpG as index
     methylation_data.set_index('CpG', inplace=True)
     
-    # Remove rows with all zero values
-    methylation_data = methylation_data.loc[(methylation_data != 0).any(axis=1)]
-    
-    # Fill NaN values with 0
-    methylation_data = methylation_data.fillna(0)
-    
     return methylation_data
-
-def standardize_sample_names():
-    """Create standardized sample names."""
-    print("Standardizing sample names...")
-    
-    # Create mapping for common sample patterns
-    sample_mapping = {}
-    
-    # Gene data samples
-    gene_samples = ['ACR-139-TP1', 'ACR-139-TP2', 'ACR-139-TP3', 'ACR-139-TP4',
-                   'ACR-145-TP1', 'ACR-145-TP2', 'ACR-145-TP3', 'ACR-145-TP4',
-                   'ACR-150-TP1', 'ACR-150-TP2', 'ACR-150-TP3', 'ACR-150-TP4',
-                   'ACR-173-TP1', 'ACR-173-TP2', 'ACR-173-TP3', 'ACR-173-TP4',
-                   'ACR-186-TP1', 'ACR-186-TP2', 'ACR-186-TP3', 'ACR-186-TP4',
-                   'ACR-225-TP1', 'ACR-225-TP2', 'ACR-225-TP3', 'ACR-225-TP4',
-                   'ACR-229-TP1', 'ACR-229-TP2', 'ACR-229-TP3', 'ACR-229-TP4',
-                   'ACR-237-TP1', 'ACR-237-TP2', 'ACR-237-TP3', 'ACR-237-TP4',
-                   'ACR-244-TP1', 'ACR-244-TP2', 'ACR-244-TP3', 'ACR-244-TP4',
-                   'ACR-265-TP1', 'ACR-265-TP2', 'ACR-265-TP3', 'ACR-265-TP4']
-    
-    for sample in gene_samples:
-        sample_mapping[sample] = sample
-    
-    return sample_mapping, gene_samples
 
 def select_genes(gene_data_log, n_genes=20):
     """Select top genes by variance."""
@@ -350,11 +260,11 @@ def save_results(correlation_results, output_dir):
         
         f.write(f"Total genes analyzed: {len(correlation_results)}\n")
         f.write(f"Total correlations calculated: {len(results_data)}\n")
-        f.write(f"Significant correlations (p < 0.05): {len(results_data[results_data['Significant'] == True])}\n\n")
+        f.write(f"Significant correlations (p < 0.05): {len(results_df[results_df['Significant'] == True])}\n\n")
         
         # Summary by regulatory factor
         for factor in ['miRNA', 'lncRNA', 'DNA_methylation']:
-            factor_data = results_data[results_data['Regulatory_Factor'] == factor]
+            factor_data = results_df[results_df['Regulatory_Factor'] == factor]
             if len(factor_data) > 0:
                 f.write(f"{factor}:\n")
                 f.write(f"  Mean correlation: {factor_data['Correlation'].mean():.3f}\n")
@@ -364,7 +274,7 @@ def save_results(correlation_results, output_dir):
         # Top correlations
         f.write("TOP 5 STRONGEST CORRELATIONS:\n")
         f.write("-" * 30 + "\n")
-        top_corrs = results_data.nlargest(5, 'Correlation')
+        top_corrs = results_df.nlargest(5, 'Correlation')
         for i, row in top_corrs.iterrows():
             f.write(f"{row['Gene']} - {row['Regulatory_Factor']}: r = {row['Correlation']:.3f} (p = {row['P_Value']:.3e})\n")
     
@@ -377,21 +287,22 @@ def main():
     
     # Create output directory
     import os
-    output_dir = 'output'
+    output_dir = '../output'
     os.makedirs(output_dir, exist_ok=True)
     
     try:
         # Load data
         gene_data, mirna_data, lncrna_data, methylation_data = load_data()
         
-        # Clean data
+        # Process data
         gene_data, gene_data_log = clean_gene_data(gene_data)
         mirna_data, mirna_data_log = clean_mirna_data(mirna_data)
         lncrna_data, lncrna_data_log = clean_lncrna_data(lncrna_data)
         methylation_data = clean_methylation_data(methylation_data)
         
-        # Standardize sample names
-        sample_mapping, available_samples = standardize_sample_names()
+        # Get available samples (all should be the same now)
+        available_samples = list(gene_data.columns)
+        print(f"Available samples: {len(available_samples)}")
         
         # Select genes
         selected_genes = select_genes(gene_data_log, n_genes=20)
@@ -399,7 +310,7 @@ def main():
         # Calculate correlations
         correlation_results = create_correlation_matrix(
             gene_data_log, mirna_data_log, lncrna_data_log,
-            methylation_data, selected_genes, sample_mapping
+            methylation_data, selected_genes, {sample: sample for sample in available_samples}
         )
         
         # Create visualizations
