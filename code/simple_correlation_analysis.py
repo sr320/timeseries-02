@@ -16,17 +16,11 @@ def load_data():
     """Load all data matrices."""
     print("Loading data...")
     
-    # Load gene expression data
-    gene_data = pd.read_csv('data/apul-gene_count_matrix.csv')
-    
-    # Load miRNA data
-    mirna_data = pd.read_csv('data/Apul_miRNA_counts_formatted.txt', sep='\t')
-    
-    # Load lncRNA data
-    lncrna_data = pd.read_csv('data/Apul_lncRNA_counts_filtered.txt', sep='\t', comment='#')
-    
-    # Load DNA methylation data
-    methylation_data = pd.read_csv('data/merged-WGBS-CpG-counts_filtered.csv')
+    # Load cleaned data files
+    gene_data = pd.read_csv('../data/gene_counts_cleaned.csv')
+    mirna_data = pd.read_csv('../data/mirna_counts_cleaned.csv')
+    lncrna_data = pd.read_csv('../data/lncrna_counts_cleaned.csv')
+    methylation_data = pd.read_csv('../data/methylation_counts_cleaned.csv')
     
     return gene_data, mirna_data, lncrna_data, methylation_data
 
