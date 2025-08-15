@@ -2,14 +2,14 @@
 output/regulation_analysis/time_series_results.json
 output/regulation_analysis/*.json
 
-# Data files
+# Data file
 *.csv
 *.tsv
 *.xlsx
 *.xls
 
 # Image files (if they're large)
-*.png
+
 *.jpg
 *.jpeg
 *.gif
