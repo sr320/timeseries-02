@@ -174,9 +174,9 @@ class OptimizedContextDependentRegulationAnalysis:
         """Analyze methylation-gene interactions dependent on miRNA levels using parallel processing."""
         print("  🔄 Parallel processing methylation-miRNA context analysis...")
         
-        # Sample genes for analysis (can be increased with parallel processing)
-        n_genes = min(500, len(self.datasets['gene']))  # Increased from 100
-        sampled_genes = np.random.choice(self.datasets['gene'].index, n_genes, replace=False)
+        # Analyze ALL genes in the dataset (full analysis)
+        n_genes = len(self.datasets['gene'])  # Use all 36,084 genes
+        sampled_genes = self.datasets['gene'].index  # Use all genes, not random sample
         
         # Split genes into chunks for parallel processing
         gene_chunks = np.array_split(sampled_genes, self.n_jobs)
@@ -218,17 +218,17 @@ class OptimizedContextDependentRegulationAnalysis:
             
             # Get top miRNAs for this gene (vectorized)
             mirna_corrs = self._get_top_correlations_vectorized(
-                gene_expression, self.datasets['mirna'], 'mirna', top_n=10
+                gene_expression, self.datasets['mirna'], 'mirna', top_n=25
             )
             
             # Get top methylation sites for this gene (vectorized)
             meth_corrs = self._get_top_correlations_vectorized(
-                gene_expression, self.datasets['methylation'], 'methylation', top_n=10
+                gene_expression, self.datasets['methylation'], 'methylation', top_n=50
             )
             
             # Analyze interactions for top regulators
-            for mirna_name, mirna_corr, mirna_pval in mirna_corrs[:5]:
-                for meth_name, meth_corr, meth_pval in meth_corrs[:5]:
+            for mirna_name, mirna_corr, mirna_pval in mirna_corrs[:10]:
+                for meth_name, meth_corr, meth_pval in meth_corrs[:15]:
                     interaction_result = self._analyze_methylation_mirna_interaction(
                         gene, gene_expression, mirna_name, meth_name
                     )
@@ -339,9 +339,9 @@ class OptimizedContextDependentRegulationAnalysis:
         """Analyze lncRNA-gene interactions dependent on miRNA levels using parallel processing."""
         print("  🔄 Parallel processing lncRNA-miRNA context analysis...")
         
-        # Sample genes for analysis
-        n_genes = min(500, len(self.datasets['gene']))
-        sampled_genes = np.random.choice(self.datasets['gene'].index, n_genes, replace=False)
+        # Analyze ALL genes in the dataset (full analysis)
+        n_genes = len(self.datasets['gene'])  # Use all 36,084 genes
+        sampled_genes = self.datasets['gene'].index  # Use all genes, not random sample
         
         # Split genes into chunks for parallel processing
         gene_chunks = np.array_split(sampled_genes, self.n_jobs)
@@ -383,17 +383,17 @@ class OptimizedContextDependentRegulationAnalysis:
             
             # Get top lncRNAs for this gene (vectorized)
             lncrna_corrs = self._get_top_correlations_vectorized(
-                gene_expression, self.datasets['lncrna'], 'lncrna', top_n=10
+                gene_expression, self.datasets['lncrna'], 'lncrna', top_n=50
             )
             
             # Get top miRNAs for this gene (vectorized)
             mirna_corrs = self._get_top_correlations_vectorized(
-                gene_expression, self.datasets['mirna'], 'mirna', top_n=10
+                gene_expression, self.datasets['mirna'], 'mirna', top_n=25
             )
             
             # Analyze interactions for top regulators
-            for lncrna_name, lncrna_corr, lncrna_pval in lncrna_corrs[:5]:
-                for mirna_name, mirna_corr, mirna_pval in mirna_corrs[:5]:
+            for lncrna_name, lncrna_corr, lncrna_pval in lncrna_corrs[:15]:
+                for mirna_name, mirna_corr, mirna_pval in mirna_corrs[:10]:
                     interaction_result = self._analyze_lncrna_mirna_interaction(
                         gene, gene_expression, lncrna_name, mirna_name
                     )
@@ -488,9 +488,9 @@ class OptimizedContextDependentRegulationAnalysis:
         """Analyze complex multi-way regulatory interactions using parallel processing."""
         print("  🔄 Parallel processing multi-way regulatory interactions...")
         
-        # Sample genes for analysis (increased with parallel processing)
-        n_genes = min(200, len(self.datasets['gene']))  # Increased from 100
-        sampled_genes = np.random.choice(self.datasets['gene'].index, n_genes, replace=False)
+        # Analyze ALL genes in the dataset (full analysis)
+        n_genes = len(self.datasets['gene'])  # Use all 36,084 genes
+        sampled_genes = self.datasets['gene'].index  # Use all genes, not random sample
         
         # Split genes into chunks for parallel processing
         gene_chunks = np.array_split(sampled_genes, self.n_jobs)
@@ -551,7 +551,7 @@ class OptimizedContextDependentRegulationAnalysis:
         # Get top miRNA regulators (vectorized)
         mirna_corrs = self._get_top_correlations_vectorized(
             self.datasets['gene'].loc[gene].values, 
-            self.datasets['mirna'], 'mirna', top_n=n_regulators//3
+            self.datasets['mirna'], 'mirna', top_n=15
         )
         
         for mirna_name, corr, pval in mirna_corrs:
@@ -560,7 +560,7 @@ class OptimizedContextDependentRegulationAnalysis:
         # Get top lncRNA regulators (vectorized)
         lncrna_corrs = self._get_top_correlations_vectorized(
             self.datasets['gene'].loc[gene].values, 
-            self.datasets['lncrna'], 'lncrna', top_n=n_regulators//3
+            self.datasets['lncrna'], 'lncrna', top_n=30
         )
         
         for lncrna_name, corr, pval in lncrna_corrs:
@@ -569,7 +569,7 @@ class OptimizedContextDependentRegulationAnalysis:
         # Get top methylation regulators (vectorized)
         meth_corrs = self._get_top_correlations_vectorized(
             self.datasets['gene'].loc[gene].values, 
-            self.datasets['methylation'], 'methylation', top_n=n_regulators//3
+            self.datasets['methylation'], 'methylation', top_n=25
         )
         
         for meth_name, corr, pval in meth_corrs:
@@ -677,9 +677,9 @@ class OptimizedContextDependentRegulationAnalysis:
             'gene_methylation_correlations': []
         }
         
-        # Sample genes for analysis
-        n_genes = min(200, len(self.datasets['gene']))
-        sampled_genes = np.random.choice(self.datasets['gene'].index, n_genes, replace=False)
+        # Analyze ALL genes in the dataset (full analysis)
+        n_genes = len(self.datasets['gene'])  # Use all 36,084 genes
+        sampled_genes = self.datasets['gene'].index  # Use all genes, not random sample
         
         # Get context mask based on miRNA levels (as proxy for context)
         mirna_means = self.datasets['mirna'].mean(axis=1)
